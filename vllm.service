@@ -9,7 +9,7 @@
 # Installation (as normal user -- no root):
 #   mkdir -p ~/.config/systemd/user/
 #   cp vllm.service ~/.config/systemd/user/
-#   chmod +x /srv/vllm2/vllm-server.sh
+#   chmod +x /home/vllm2/vllm.qwen3.5-9b_mtp_spark/vllm-server.sh
 #   systemctl --user daemon-reload
 #   systemctl --user enable --now vllm
 #
