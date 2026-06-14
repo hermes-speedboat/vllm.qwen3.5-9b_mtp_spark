@@ -1,0 +1,61 @@
+# vllm.service -- Systemd user service for vLLM + Qwen3.5-9B AWQ 4-bit
+# DGX Spark (GB10, Grace Blackwell)
+#
+# Prerequisites (headless/SSH-only):
+#   sudo apt install dbus dbus-user-session
+#   sudo loginctl enable-linger $USER
+#   echo 'export DBUS_SESSION_BUS_ADDRESS="unix:path=/run/user/$(id -u)/bus"' >> ~/.bashrc
+#
+# Installation (as normal user -- no root):
+#   mkdir -p ~/.config/systemd/user/
+#   cp vllm.service ~/.config/systemd/user/
+#   chmod +x /srv/vllm2/vllm-server.sh
+#   systemctl --user daemon-reload
+#   systemctl --user enable --now vllm
+#
+# Check status:
+#   systemctl --user status vllm
+#
+# View logs:
+#   journalctl --user -u vllm -f
+#
+# Stop / Restart:
+#   systemctl --user stop vllm
+#   systemctl --user restart vllm
+
+[Unit]
+Description=vLLM Server -- Qwen3.5-9B (DGX Spark)
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+WorkingDirectory=/srv/vllm2
+
+# Overridable via: systemctl --user edit vllm
+Environment=PORT=8001
+Environment=HOST=0.0.0.0
+Environment=MAX_MODEL_LEN=262144
+Environment=GPU_MEM_UTIL=0.3
+Environment=LANGUAGE_ONLY=false
+Environment=NUM_SPEC_TOKENS=2
+Environment=MODEL_REPO=cyankiwi/Qwen3.5-9B-AWQ-4bit
+
+# Server startup script (sources .venv)
+ExecStart=/srv/vllm2/vllm-server.sh
+
+# Graceful shutdown -- vLLM needs time to drain
+TimeoutStopSec=120
+KillSignal=SIGTERM
+SendSIGKILL=no
+
+# Auto-restart on crash
+Restart=on-failure
+RestartSec=15
+
+# Resource limits
+LimitNOFILE=65536
+LimitNPROC=4096
+
+[Install]
+WantedBy=default.target
