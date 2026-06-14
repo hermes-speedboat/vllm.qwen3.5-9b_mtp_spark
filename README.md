@@ -38,7 +38,7 @@ bash vllm-server.sh        # start server on port 8001
 - **Reasoning:** Extracted to separate `reasoning` field via `--reasoning-parser qwen3` — clean content
 - **Tool calling:** Native OpenAI `tool_calls` via `--tool-call-parser qwen3_coder`
 - **Vision:** On by default (Qwen3.5 has native vision encoder). Set `LANGUAGE_ONLY=true` to disable and save ~2 GB
-- **GPU memory:** `GPU_MEM_UTIL=0.3` (~36 GB reserved, ~7 GB actual usage) — leaves headroom alongside the 35B model and Ollama
+- **GPU memory:** `GPU_MEM_UTIL=0.25` (~30 GB reserved, ~8.6 GB actual usage) — leaves headroom alongside the 35B model and Ollama
 - **MTP:** Speculative decoding with 2 draft tokens via `qwen3_next_mtp` method
 - **No CUDA graphs:** `--enforce-eager` for instant first-request response
 - **Model name:** Served as `cyankiwi/Qwen3.5-9B-AWQ-4bit` (not filesystem path)
