@@ -25,7 +25,7 @@ bash vllm-server.sh        # start server on port 8001
 ## Architecture
 
 - **Model:** Qwen3.5-9B (dense, hybrid Gated DeltaNet + Gated Attention, 32 layers)
-- **Quantization:** AWQ 4-bit, ~5 GB disk, ~4.5 GB loaded
+- **Quantization:** AWQ 4-bit via compressed-tensors, ~8.5 GB disk, ~5 GB loaded
 - **Format:** PyTorch safetensors (via `snapshot_download` from `huggingface_hub`)
 - **Inference:** vLLM 0.23.0
 - **Spec Decode:** MTP (Multi Token Prediction via `qwen3_next_mtp`), 2 draft tokens

@@ -59,7 +59,7 @@ ARGS=(
   "--max-model-len" "${MAX_MODEL_LEN}"
   "--gpu-memory-utilization" "${GPU_MEM_UTIL}"
   "--trust-remote-code"
-  "--quantization" "awq"
+  "--quantization" "compressed-tensors"
   "--dtype" "float16"
   "--enable-auto-tool-choice"
   "--tool-call-parser" "qwen3_coder"
