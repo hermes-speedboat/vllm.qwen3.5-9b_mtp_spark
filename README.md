@@ -16,21 +16,22 @@ bash vllm-server.sh        # start server on port 8001
 
 | Metric | Value |
 |--------|-------|
-| Generation throughput | ~90-140 tok/s (estimated) |
-| MTP acceptance (1st draft) | ~75-85% |
-| MTP acceptance (2nd draft) | ~55-70% |
-| Mean acceptance length | ~2.2-2.5 |
-| GPU KV cache usage | ~2-3 GB at 256k context |
+| Generation throughput | ~31 tok/s (40 tok in 1.29s) |
+| MTP acceptance (1st draft) | 57-100% |
+| MTP acceptance (2nd draft) | 33-100% |
+| Mean acceptance length | 1.90-3.00 |
+| Response time (non-thinking, 9 tok) | 0.26s |
+| GPU KV cache usage | 22.2 GiB available, <1% used at 256k context |
 
 ## Architecture
 
 - **Model:** Qwen3.5-9B (dense, hybrid Gated DeltaNet + Gated Attention, 32 layers)
-- **Quantization:** AWQ 4-bit via compressed-tensors, ~8.5 GB disk, ~5 GB loaded
+- **Quantization:** AWQ 4-bit via compressed-tensors, ~8.5 GB disk, ~8.59 GB loaded (model) + ~22.2 GiB KV cache reserved
 - **Format:** PyTorch safetensors (via `snapshot_download` from `huggingface_hub`)
 - **Inference:** vLLM 0.23.0
 - **Spec Decode:** MTP (Multi Token Prediction via `qwen3_next_mtp`), 2 draft tokens
 - **Hardware:** DGX Spark (GB10), 128 GB unified memory, ~1.5 TB/s bandwidth
-- **Active params/token:** 9B × 0.5 bytes = ~4.5 GB per forward pass
+- **Active params/token:** 9B × 0.5 bytes @ 4-bit = ~4.5 GB per forward pass (dense, all params active)
 
 ## Features
 
