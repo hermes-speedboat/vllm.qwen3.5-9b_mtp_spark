@@ -30,7 +30,7 @@ Wants=network-online.target
 
 [Service]
 Type=simple
-WorkingDirectory=/srv/vllm2
+WorkingDirectory=/home/vllm2/vllm.qwen3.5-9b_mtp_spark
 
 # Overridable via: systemctl --user edit vllm
 Environment=PORT=8001
@@ -42,7 +42,7 @@ Environment=NUM_SPEC_TOKENS=2
 Environment=MODEL_REPO=cyankiwi/Qwen3.5-9B-AWQ-4bit
 
 # Server startup script (sources .venv)
-ExecStart=/srv/vllm2/vllm-server.sh
+ExecStart=/home/vllm2/vllm.qwen3.5-9b_mtp_spark/vllm-server.sh
 
 # Graceful shutdown -- vLLM needs time to drain
 TimeoutStopSec=120

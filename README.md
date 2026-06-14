@@ -5,11 +5,11 @@ Optimized vLLM inference setup for **DGX Spark (GB10, Grace Blackwell ARM64)** w
 ## Quickstart
 
 ```bash
-cd /srv/vllm2
-git clone https://github.com/hermes-speedboat/vllm.qwen3.5-9b_mtp_spark.git .
-bash setup_vllm.sh        # uv + venv + vllm + huggingface-hub
-bash download_model.sh     # ~5 GB model via snapshot_download()
-bash vllm-server.sh        # start server on port 8001
+cd /home/vllm2
+git clone https://github.com/hermes-speedboat/vllm.qwen3.5-9b_mtp_spark.git vllm.qwen3.5-9b_mtp_spark
+bash vllm.qwen3.5-9b_mtp_spark/setup_vllm.sh
+bash vllm.qwen3.5-9b_mtp_spark/download_model.sh
+bash vllm.qwen3.5-9b_mtp_spark/vllm-server.sh
 ```
 
 ## Performance
@@ -70,7 +70,7 @@ source ~/.bashrc
 ```bash
 mkdir -p ~/.config/systemd/user/
 cp vllm.service ~/.config/systemd/user/
-chmod +x /srv/vllm2/vllm-server.sh
+chmod +x /home/vllm2/vllm.qwen3.5-9b_mtp_spark/vllm-server.sh
 systemctl --user daemon-reload
 systemctl --user enable --now vllm
 ```
